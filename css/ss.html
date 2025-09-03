@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flex Wrap Çözümü</title>
+    <style>
+        .container {
+            display: flex; /* Flex düzeni */
+            align-items: flex-start; /* Yukarı hizalama */
+            flex-wrap: wrap; /* İçerikleri yeni satırlara taşı */
+            margin-bottom: 20px; /* Her kutu arasında boşluk bırakır */
+        }
+
+        .text-box {
+            border: 2px solid #333; /* Kutunun çerçevesi */
+            padding: 15px; /* Kutunun iç boşluğu */
+            width: 60%; /* Kutunun genişliği */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Hafif bir gölge */
+            flex-shrink: 0; /* Küçülmeyi engelle */
+        }
+
+        .image {
+            margin-left: 15px; /* Resim ile kutu arasında boşluk */
+            width: 150px; /* Resmin genişliği */
+            flex-shrink: 0; /* Küçülmeyi engelle */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="text-box">
+            <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
+                Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+            </p>
+        </div>
+        <img src="resim.jpg" alt="Bir örnek resim" class="image">
+    </div>
+
+    <div class="container">
+        <div class="text-box">
+            <p>
+                Yeni kutu düzgün hizalanır ve üstteki resimden etkilenmez.
+            </p>
+        </div>
+        <img src="resim.jpg" alt="Bir başka örnek resim" class="image">
+    </div>
+</body>
+</html>
