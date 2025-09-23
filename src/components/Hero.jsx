@@ -55,9 +55,19 @@ const Hero = ({ setActiveSection }) => {
       <section id="home" className="min-h-screen flex items-center justify-center relative overflow-hidden pt-16">
         {/* Background Effects */}
         <div className="absolute inset-0 bg-gradient-to-br from-dark-900 via-dark-800 to-dark-900">
-          <div className="absolute inset-0 bg-gradient-radial from-primary-500/10 via-transparent to-transparent"></div>
-          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-secondary-500/5 rounded-full blur-3xl animate-pulse-slow"></div>
-          <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-primary-500/5 rounded-full blur-3xl animate-pulse-slow delay-1000"></div>
+          {/* Subtle gradient overlay */}
+          <div className="absolute inset-0 bg-gradient-to-r from-primary-500/5 via-secondary-500/5 to-primary-500/5"></div>
+          
+          {/* Floating orbs - darker and more subtle */}
+          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-gradient-to-r from-primary-500/10 to-secondary-500/10 rounded-full blur-3xl animate-float"></div>
+          <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-gradient-to-r from-secondary-500/10 to-primary-500/10 rounded-full blur-3xl animate-float delay-1000"></div>
+          <div className="absolute top-1/2 right-1/3 w-64 h-64 bg-gradient-to-r from-primary-400/8 to-secondary-400/8 rounded-full blur-2xl animate-float delay-500"></div>
+          
+          {/* Grid pattern - very subtle */}
+          <div className="absolute inset-0 bg-grid-pattern opacity-5"></div>
+          
+          {/* Subtle shimmer effect */}
+          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-primary-400/3 to-transparent transform -skew-x-12 animate-shimmer"></div>
         </div>
 
         <div className="relative z-10 w-full max-w-7xl mx-auto px-2 sm:px-4 lg:px-8 text-center">
@@ -160,8 +170,14 @@ const Hero = ({ setActiveSection }) => {
       </section>
 
       {/* About Section */}
-      <section id="about" className="py-20 bg-gradient-to-b from-dark-900 to-dark-800">
-        <div className="max-w-7xl mx-auto px-2 sm:px-4 lg:px-8">
+      <section id="about" className="py-20 bg-gradient-to-b from-dark-800 via-dark-700 to-dark-800 relative overflow-hidden">
+        {/* Background Effects for About */}
+        <div className="absolute inset-0">
+          <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-primary-500/3 via-secondary-500/3 to-primary-500/3"></div>
+          <div className="absolute top-1/3 left-1/4 w-72 h-72 bg-gradient-to-r from-primary-500/8 to-secondary-500/8 rounded-full blur-3xl animate-pulse-slow"></div>
+          <div className="absolute bottom-1/3 right-1/4 w-72 h-72 bg-gradient-to-r from-secondary-500/8 to-primary-500/8 rounded-full blur-3xl animate-pulse-slow delay-1000"></div>
+        </div>
+        <div className="relative z-10 max-w-7xl mx-auto px-2 sm:px-4 lg:px-8">
           {/* Section Header */}
           <motion.div
             initial={{ opacity: 0, y: 50 }}
