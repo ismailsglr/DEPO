@@ -20,6 +20,29 @@ body {
   color: #f8fafc;
   line-height: 1.6;
   overflow-x: hidden;
+  width: 100%;
+  min-width: 320px;
+}
+
+/* Responsive container fixes */
+.container {
+  width: 100%;
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+/* Fix for browser sidebars */
+@media (max-width: 1200px) {
+  .container {
+    padding: 0 0.5rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: 0 0.25rem;
+  }
 }
 
 /* Custom scrollbar */
