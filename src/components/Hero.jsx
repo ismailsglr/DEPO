@@ -1,14 +1,13 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { ArrowDown, ShoppingCart, Zap } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 const Hero = ({ setActiveSection }) => {
-  const scrollToMarketplace = () => {
-    setActiveSection('marketplace');
-    const element = document.getElementById('marketplace');
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-    }
+  const navigate = useNavigate();
+  
+  const goToMarketplace = () => {
+    navigate('/marketplace');
   };
 
   return (
@@ -75,7 +74,7 @@ const Hero = ({ setActiveSection }) => {
             className="flex flex-col sm:flex-row justify-center items-center gap-4"
           >
             <button
-              onClick={scrollToMarketplace}
+              onClick={goToMarketplace}
               className="group bg-gradient-to-r from-primary-500 to-secondary-500 hover:from-primary-600 hover:to-secondary-600 text-white px-8 py-4 rounded-xl text-lg font-semibold transition-all duration-300 shadow-lg hover:shadow-2xl transform hover:-translate-y-1 flex items-center space-x-2"
             >
               <ShoppingCart className="w-5 h-5" />
