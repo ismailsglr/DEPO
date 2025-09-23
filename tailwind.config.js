@@ -52,11 +52,22 @@ export default {
         'float': 'float 6s ease-in-out infinite',
         'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
         'bounce-slow': 'bounce 2s infinite',
+        'shimmer': 'shimmer 3s ease-in-out infinite',
+        'glow': 'glow 2s ease-in-out infinite alternate',
       },
       keyframes: {
         float: {
-          '0%, 100%': { transform: 'translateY(0px)' },
-          '50%': { transform: 'translateY(-20px)' },
+          '0%, 100%': { transform: 'translateY(0px) rotate(0deg)' },
+          '33%': { transform: 'translateY(-20px) rotate(1deg)' },
+          '66%': { transform: 'translateY(-10px) rotate(-1deg)' },
+        },
+        shimmer: {
+          '0%': { transform: 'translateX(-100%) skewX(-12deg)' },
+          '100%': { transform: 'translateX(200%) skewX(-12deg)' },
+        },
+        glow: {
+          '0%': { boxShadow: '0 0 20px rgba(147, 51, 234, 0.5)' },
+          '100%': { boxShadow: '0 0 40px rgba(147, 51, 234, 0.8)' },
         }
       },
       backgroundImage: {
