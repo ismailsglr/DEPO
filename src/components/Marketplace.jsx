@@ -110,58 +110,58 @@ const MarketplacePage = () => {
       .reduce((sum, [, val]) => sum + val, 0);
 
   return (
-    <div className="max-w-6xl mx-auto py-12 px-4 pt-32">
-      <h1 className="text-4xl font-extrabold mb-10 text-center bg-gradient-to-r from-primary-400 to-secondary-400 bg-clip-text text-transparent drop-shadow-lg">Marketplace</h1>
-      <div className="flex flex-col gap-12">
+    <div className="max-w-6xl mx-auto py-8 sm:py-12 px-2 sm:px-4 pt-24 sm:pt-32">
+      <h1 className="text-2xl sm:text-3xl md:text-4xl font-extrabold mb-6 sm:mb-10 text-center bg-gradient-to-r from-primary-400 to-secondary-400 bg-clip-text text-transparent drop-shadow-lg">Marketplace</h1>
+      <div className="flex flex-col gap-8 sm:gap-12">
         {animalTypes.map((type) => (
           <div key={type}>
-            <h2 className="text-2xl font-bold mb-6 text-center text-primary-400 flex items-center justify-center gap-2">
-              <span className="text-3xl">{animalIcons[type]}</span> {type}s
+            <h2 className="text-xl sm:text-2xl font-bold mb-4 sm:mb-6 text-center text-primary-400 flex items-center justify-center gap-2">
+              <span className="text-2xl sm:text-3xl">{animalIcons[type]}</span> {type}s
             </h2>
-            <div className="flex flex-row gap-8 justify-center">
+            <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 lg:gap-8 justify-center items-center">
               {products.filter((a) => a.name === type).map((animal) => {
                 const key = `${animal.name}_${animal.tier || 1}`;
                 return (
                   <div
                     key={key}
-                    className="rounded-2xl shadow-xl p-7 flex flex-col items-center border-2 border-primary-400 bg-gradient-to-br from-dark-800 via-dark-900 to-dark-800 hover:scale-105 transition-transform duration-300 min-w-[220px] max-w-[240px]"
+                    className="rounded-2xl shadow-xl p-4 sm:p-6 lg:p-7 flex flex-col items-center border-2 border-primary-400 bg-gradient-to-br from-dark-800 via-dark-900 to-dark-800 hover:scale-105 transition-transform duration-300 w-full sm:min-w-[200px] sm:max-w-[240px] lg:min-w-[220px]"
                   >
-                    <div className="text-2xl font-bold text-primary-300 mb-1 flex items-center gap-2">
-                      <span className="text-3xl">{animalIcons[animal.name]}</span> Tier {animal.tier || 1}
+                    <div className="text-lg sm:text-xl lg:text-2xl font-bold text-primary-300 mb-1 flex items-center gap-2">
+                      <span className="text-2xl sm:text-3xl">{animalIcons[animal.name]}</span> Tier {animal.tier || 1}
                     </div>
-                    <div className="mb-2 text-lg text-gray-200 font-semibold">Price: <span className="font-bold text-secondary-400">{animal.price} SOL</span></div>
+                    <div className="mb-2 text-base sm:text-lg text-gray-200 font-semibold">Price: <span className="font-bold text-secondary-400">{animal.price} SOL</span></div>
                     <button
-                      className="bg-gradient-to-r from-primary-500 to-secondary-500 text-white px-8 py-3 rounded-xl font-bold text-lg shadow-lg hover:from-primary-600 hover:to-secondary-600 transition-all duration-300 mb-2 mt-2"
+                      className="bg-gradient-to-r from-primary-500 to-secondary-500 text-white px-6 sm:px-8 py-2 sm:py-3 rounded-xl font-bold text-base sm:text-lg shadow-lg hover:from-primary-600 hover:to-secondary-600 transition-all duration-300 mb-2 mt-2 w-full sm:w-auto"
                       onClick={() => handlePurchase(animal)}
                       disabled={loading}
                     >
                       Buy
                     </button>
-                    <div className="text-base text-secondary-300 mb-1 mt-2">
+                    <div className="text-sm sm:text-base text-secondary-300 mb-1 mt-2">
                       You own: <span className="font-bold">{purchases[key] || 0}</span>
                     </div>
-                    <div className="text-sm text-gray-300 text-center mt-2 italic">
+                    <div className="text-xs sm:text-sm text-gray-300 text-center mt-2 italic">
                       {type} Tier {animal.tier || 1} earns <span className="font-bold text-primary-200">{animal.reward || 0} coins/hour</span>.
                     </div>
                   </div>
                 );
               })}
             </div>
-            <div className="mt-6 text-center text-green-400 text-lg font-bold drop-shadow">
+            <div className="mt-4 sm:mt-6 text-center text-green-400 text-base sm:text-lg font-bold drop-shadow">
               Total {type.toLowerCase()}s you own: <span className="font-extrabold">{getTotal(type)}</span>
             </div>
           </div>
         ))}
       </div>
       {showModal && (
-        <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
-          <div className={`rounded-2xl p-8 shadow-2xl min-w-[320px] max-w-[90vw] text-center ${messageType === 'success' ? 'bg-green-700/95 text-white' : 'bg-red-700/95 text-white'}`}>
-            <div className="text-2xl font-bold mb-4">
+        <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50 p-4">
+          <div className={`rounded-2xl p-6 sm:p-8 shadow-2xl w-full max-w-[400px] text-center ${messageType === 'success' ? 'bg-green-700/95 text-white' : 'bg-red-700/95 text-white'}`}>
+            <div className="text-xl sm:text-2xl font-bold mb-4">
               {messageType === 'success' ? 'Success!' : 'Error!'}
             </div>
-            <div className="text-lg mb-6">{message}</div>
+            <div className="text-base sm:text-lg mb-6">{message}</div>
             <button
-              className="mt-2 px-6 py-2 rounded-lg bg-white text-gray-900 font-semibold hover:bg-gray-200 transition"
+              className="mt-2 px-6 py-2 rounded-lg bg-white text-gray-900 font-semibold hover:bg-gray-200 transition w-full sm:w-auto"
               onClick={() => setShowModal(false)}
             >
               Close
