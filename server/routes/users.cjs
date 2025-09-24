@@ -228,8 +228,6 @@ router.get('/stats/top-buyers', async (req, res) => {
     const { data: topBuyers, error } = await supabase
       .from('users')
       .select('*')
-      .order('total_purchases', { ascending: false })
-      .order('total_spent', { ascending: false })
       .limit(10);
     
     if (error) throw error;
@@ -279,4 +277,113 @@ router.patch('/:id/reactivate', async (req, res) => {
   }
 });
 
-module.exports = router; 
+// Kullanıcının ödüllerini hesaplar ve toplar
+router.post('/wallet/:walletAddress/claim-rewards', async (req, res) => {
+  const { walletAddress } = req.params;
+
+  try {
+    // 1. Kullanıcıyı bul
+    const { data: user, error: userError } = await supabase
+      .from('users')
+      .select('id, coins, last_claimed_at')
+      .eq('wallet_address', walletAddress)
+      .single();
+
+    if (userError || !user) {
+      console.error('Kullanıcı bulunamadı:', userError);
+      return res.status(404).json({ error: 'User not found' });
+    }
+
+    const lastClaimedAt = user.last_claimed_at ? new Date(user.last_claimed_at) : new Date(0);
+
+    // 2. Kullanıcının tüm siparişlerini ve ürün detaylarını çek
+    const { data: orders, error: ordersError } = await supabase
+      .from('orders')
+      .select(`
+        created_at,
+        products:product_id (
+          reward
+        )
+      `)
+      .eq('user_wallet_address', walletAddress)
+      .order('created_at', { ascending: true });
+
+    if (ordersError) throw ordersError;
+
+    let totalRewards = 0;
+    const now = new Date();
+
+    // 3. Her bir sipariş için birikmiş ödülü hesapla
+    orders.forEach(order => {
+      const orderCreatedAt = new Date(order.created_at);
+      const rewardRate = order.products.reward;
+
+      // Ödül hesaplama süresini belirle (son talepten veya siparişin oluşturulma anından itibaren)
+      const startTime = orderCreatedAt > lastClaimedAt ? orderCreatedAt : lastClaimedAt;
+      const elapsedTimeInMs = now - startTime;
+      const elapsedTimeInHours = elapsedTimeInMs / (1000 * 60 * 60);
+
+      if (elapsedTimeInHours > 0) {
+        totalRewards += rewardRate * elapsedTimeInHours;
+      }
+    });
+
+    // 4. Kullanıcının coins bakiyesini güncelle ve son talep zamanını kaydet
+    const { data: updatedUser, error: updateError } = await supabase
+      .from('users')
+      .update({
+        coins: user.coins + Math.floor(totalRewards),
+        last_claimed_at: new Date().toISOString()
+      })
+      .eq('id', user.id)
+      .select()
+      .single();
+
+    if (updateError) throw updateError;
+
+    res.json({ claimedAmount: Math.floor(totalRewards), newCoinBalance: updatedUser.coins });
+  } catch (error) {
+    console.error('Ödül talep etme hatası:', error);
+    res.status(500).json({ error: 'Failed to claim rewards', message: error.message });
+  }
+});
+
+// Kullanıcının toplam harcama ve satın alma istatistiklerini günceller
+router.patch('/wallet/:walletAddress/stats', async (req, res) => {
+  const { walletAddress } = req.params;
+  const { amount } = req.body;
+
+  try {
+    const { data: user, error: userError } = await supabase
+      .from('users')
+      .select('id, total_spent, total_purchases')
+      .eq('wallet_address', walletAddress)
+      .single();
+
+    if (userError || !user) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+
+    const newTotalSpent = (user.total_spent || 0) + parseFloat(amount);
+    const newTotalPurchases = (user.total_purchases || 0) + 1;
+
+    const { data: updatedUser, error: updateError } = await supabase
+      .from('users')
+      .update({
+        total_spent: newTotalSpent,
+        total_purchases: newTotalPurchases,
+      })
+      .eq('id', user.id)
+      .select()
+      .single();
+
+    if (updateError) throw updateError;
+
+    res.json(updatedUser);
+  } catch (error) {
+    console.error('Kullanıcı istatistiklerini güncelleme hatası:', error);
+    res.status(500).json({ error: 'Failed to update user stats', message: error.message });
+  }
+});
+
+module.exports = router;

@@ -5,6 +5,8 @@ import Hero from './components/Hero';
 import MarketplacePage from './components/Marketplace';
 import About from './components/About';
 import Footer from './components/Footer';
+import AdminDashboard from './components/AdminDashboard'; // AdminDashboard.jsx dosyasını import edin
+
 
 function App() {
   const [activeSection, setActiveSection] = useState('home');
@@ -17,6 +19,7 @@ function App() {
           <Route path="/" element={<Hero setActiveSection={setActiveSection} />} />
           <Route path="/marketplace" element={<MarketplacePage />} />
           <Route path="/about" element={<About />} />
+          <Route path="/admin" element={<AdminDashboard />} />
         </Routes>
         <Footer />
       </Router>
