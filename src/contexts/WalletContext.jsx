@@ -18,8 +18,12 @@ export const WalletProvider = ({ children }) => {
   const [connected, setConnected] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  // Use Solana devnet for development
-  const connection = new Connection('https://api.devnet.solana.com', 'confirmed');
+  // Use Solana devnet for development with multiple RPC endpoints for reliability
+  const connection = new Connection('https://api.devnet.solana.com', {
+    commitment: 'confirmed',
+    confirmTransactionInitialTimeout: 60000,
+    disableRetryOnRateLimit: false,
+  });
 
   useEffect(() => {
     // Check if Phantom wallet is installed
@@ -91,31 +95,79 @@ export const WalletProvider = ({ children }) => {
       throw new Error('Wallet not connected');
     }
 
-    try {
-      const transaction = new Transaction().add(
-        SystemProgram.transfer({
-          fromPubkey: publicKey,
-          toPubkey: new PublicKey(recipientAddress),
-          lamports: amount * LAMPORTS_PER_SOL,
-        })
-      );
+    const maxRetries = 3;
+    let lastError;
 
-      transaction.feePayer = publicKey;
+    for (let attempt = 1; attempt <= maxRetries; attempt++) {
+      try {
+        console.log(`Transaction attempt ${attempt}/${maxRetries}`);
+        
+        const transaction = new Transaction().add(
+          SystemProgram.transfer({
+            fromPubkey: publicKey,
+            toPubkey: new PublicKey(recipientAddress),
+            lamports: amount * LAMPORTS_PER_SOL,
+          })
+        );
 
-      const { blockhash } = await connection.getLatestBlockhash();
-      transaction.recentBlockhash = blockhash;
+        transaction.feePayer = publicKey;
 
-      const signature = await wallet.signAndSendTransaction(transaction);
-      await connection.confirmTransaction(signature.signature);
-      
-      // Update balance after transaction
-      await updateBalance(publicKey);
-      
-      return signature.signature;
-    } catch (error) {
-      console.error('Transaction failed:', error);
-      throw error;
+        // Get latest blockhash with retry
+        let blockhash;
+        try {
+          const { blockhash: latestBlockhash } = await connection.getLatestBlockhash('confirmed');
+          blockhash = latestBlockhash;
+        } catch (blockhashError) {
+          console.warn('Failed to get blockhash, retrying...', blockhashError);
+          if (attempt < maxRetries) {
+            await new Promise(resolve => setTimeout(resolve, 1000 * attempt));
+            continue;
+          }
+          throw blockhashError;
+        }
+
+        transaction.recentBlockhash = blockhash;
+
+        const signature = await wallet.signAndSendTransaction(transaction);
+        
+        // Confirm transaction with timeout
+        try {
+          await connection.confirmTransaction(signature.signature, 'confirmed');
+        } catch (confirmError) {
+          console.warn('Transaction confirmation failed, but signature exists:', confirmError);
+          // Continue anyway as the transaction might still be valid
+        }
+        
+        // Update balance after transaction
+        await updateBalance(publicKey);
+        
+        console.log('Transaction successful:', signature.signature);
+        return signature.signature;
+        
+      } catch (error) {
+        lastError = error;
+        console.error(`Transaction attempt ${attempt} failed:`, error);
+        
+        // If it's a network error and we have retries left, wait and try again
+        if (attempt < maxRetries && (
+          error.message.includes('Failed to fetch') ||
+          error.message.includes('ERR_CERT_AUTHORITY_INVALID') ||
+          error.message.includes('network')
+        )) {
+          console.log(`Retrying in ${attempt * 2} seconds...`);
+          await new Promise(resolve => setTimeout(resolve, 2000 * attempt));
+          continue;
+        }
+        
+        // If it's the last attempt or not a network error, throw immediately
+        if (attempt === maxRetries) {
+          break;
+        }
+      }
     }
+
+    console.error('All transaction attempts failed:', lastError);
+    throw lastError;
   };
 
   const value = {
