@@ -124,12 +124,12 @@ const MarketplacePage = () => {
                 return (
                   <div
                     key={key}
-                    className="rounded-2xl shadow-xl p-3 sm:p-4 lg:p-5 flex flex-col items-center justify-between border-2 border-primary-400 bg-gradient-to-br from-dark-800 via-dark-900 to-dark-800 hover:scale-105 transition-transform duration-300 w-1/2 sm:w-[120px] md:w-[130px] lg:w-[140px] aspect-square"
+                    className="rounded-2xl shadow-xl p-3 sm:p-4 lg:p-5 flex flex-col items-center justify-between border-2 border-primary-400 bg-gradient-to-br from-dark-800 via-dark-900 to-dark-800 hover:scale-105 transition-transform duration-300 w-1/2 sm:w-[140px] md:w-[150px] lg:w-[200px] h-[200px] sm:h-[220px] md:h-[240px] lg:h-[260px]"
                   >
                       {/* Top Section */}
                       <div className="flex flex-col items-center text-center">
-                        <div className="text-lg sm:text-xl font-bold text-primary-300 mb-2 flex items-center gap-2">
-                          <span className="text-2xl sm:text-3xl">{animalIcons[animal.name]}</span> Tier {animal.tier || 1}
+                        <div className="text-sm sm:text-xl font-bold text-primary-300 mb-2 flex items-center gap-2">
+                          <span className="text-2xl sm:text-3xl">{animalIcons[animal.name]}</span> T{animal.tier || 1}
                         </div>
                         <div className="text-sm sm:text-base text-gray-200 font-semibold">Price: <span className="font-bold text-secondary-400">{animal.price} SOL</span></div>
                       </div>
