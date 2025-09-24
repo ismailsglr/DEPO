@@ -36,11 +36,22 @@ const MarketplacePage = () => {
     fetchProducts();
   }, []);
 
-  // Kullanıcının sahip olduğu hayvanları backend'den çek
+  // Kullanıcı kaydı ve sahip olduğu hayvanları backend'den çek
   useEffect(() => {
     const fetchPurchases = async () => {
       if (!publicKey) return;
       try {
+        // Önce kullanıcıyı kaydet
+        await fetch('/api/users', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            walletAddress: publicKey.toString(),
+            publicKey: publicKey.toString()
+          })
+        });
+
+        // Sonra siparişleri çek
         const res = await fetch(`/api/orders/wallet/${publicKey.toString()}`);
         const orders = await res.json();
         // purchases objesini doldur
@@ -53,6 +64,7 @@ const MarketplacePage = () => {
         });
         setPurchases(newPurchases);
       } catch (e) {
+        console.error('Error fetching purchases:', e);
         // Hata durumunda purchases sıfırla
         setPurchases({});
       }
