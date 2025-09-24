@@ -118,40 +118,40 @@ const MarketplacePage = () => {
             <h2 className="text-xl sm:text-2xl font-bold mb-4 sm:mb-6 text-center text-primary-400 flex items-center justify-center gap-2">
               <span className="text-2xl sm:text-3xl">{animalIcons[type]}</span> {type}s
             </h2>
-            <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 lg:gap-8 justify-center items-center">
+            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 lg:gap-6 justify-center items-center">
               {products.filter((a) => a.name === type).map((animal) => {
                 const key = `${animal.name}_${animal.tier || 1}`;
                 return (
                   <div
                     key={key}
-                    className="rounded-2xl shadow-xl p-4 sm:p-5 lg:p-6 flex flex-col items-center justify-between border-2 border-primary-400 bg-gradient-to-br from-dark-800 via-dark-900 to-dark-800 hover:scale-105 transition-transform duration-300 w-full sm:w-[180px] lg:w-[200px] aspect-square"
+                    className="rounded-2xl shadow-xl p-3 sm:p-4 lg:p-5 flex flex-col items-center justify-between border-2 border-primary-400 bg-gradient-to-br from-dark-800 via-dark-900 to-dark-800 hover:scale-105 transition-transform duration-300 w-1/2 sm:w-[120px] md:w-[130px] lg:w-[140px] aspect-square"
                   >
-                    {/* Top Section */}
-                    <div className="flex flex-col items-center text-center">
-                      <div className="text-lg sm:text-xl font-bold text-primary-300 mb-2 flex items-center gap-2">
-                        <span className="text-2xl sm:text-3xl">{animalIcons[animal.name]}</span> Tier {animal.tier || 1}
+                      {/* Top Section */}
+                      <div className="flex flex-col items-center text-center">
+                        <div className="text-lg sm:text-xl font-bold text-primary-300 mb-2 flex items-center gap-2">
+                          <span className="text-2xl sm:text-3xl">{animalIcons[animal.name]}</span> Tier {animal.tier || 1}
+                        </div>
+                        <div className="text-sm sm:text-base text-gray-200 font-semibold">Price: <span className="font-bold text-secondary-400">{animal.price} SOL</span></div>
                       </div>
-                      <div className="text-sm sm:text-base text-gray-200 font-semibold">Price: <span className="font-bold text-secondary-400">{animal.price} SOL</span></div>
-                    </div>
 
-                    {/* Middle Section */}
-                    <div className="flex flex-col items-center text-center">
-                      <div className="text-xs sm:text-sm text-secondary-300 mb-2">
-                        You own: <span className="font-bold">{purchases[key] || 0}</span>
+                      {/* Middle Section */}
+                      <div className="flex flex-col items-center text-center">
+                        <div className="text-xs sm:text-sm text-secondary-300 mb-2">
+                          You own: <span className="font-bold">{purchases[key] || 0}</span>
+                        </div>
+                        <div className="text-xs text-gray-300 text-center italic">
+                          Earns <span className="font-bold text-primary-200">{animal.reward || 0} coins/hour</span>
+                        </div>
                       </div>
-                      <div className="text-xs text-gray-300 text-center italic">
-                        Earns <span className="font-bold text-primary-200">{animal.reward || 0} coins/hour</span>
-                      </div>
-                    </div>
 
-                    {/* Bottom Section */}
-                    <button
-                      className="bg-gradient-to-r from-primary-500 to-secondary-500 text-white px-4 sm:px-6 py-2 rounded-lg font-semibold text-sm sm:text-base shadow-lg hover:from-primary-600 hover:to-secondary-600 transition-all duration-300 w-full"
-                      onClick={() => handlePurchase(animal)}
-                      disabled={loading}
-                    >
-                      Buy
-                    </button>
+                      {/* Bottom Section */}
+                      <button
+                        className="bg-gradient-to-r from-primary-500 to-secondary-500 text-white px-4 sm:px-6 py-2 rounded-lg font-semibold text-sm sm:text-base shadow-lg hover:from-primary-600 hover:to-secondary-600 transition-all duration-300 w-full"
+                        onClick={() => handlePurchase(animal)}
+                        disabled={loading}
+                      >
+                        Buy
+                      </button>
                   </div>
                 );
               })}
