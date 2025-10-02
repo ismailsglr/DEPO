@@ -12,7 +12,7 @@ const Navbar = ({ activeSection, setActiveSection }) => {
     { id: 'home', label: 'Home', href: '/' },
     { id: 'marketplace', label: 'Marketplace', href: '/marketplace' },
     { id: 'about', label: 'About', href: '/about' },
-    { id: 'admin', label: 'Admin', href: '/admin' }, // Bu satırı ekledik
+    { id: 'admin', label: 'Admin', href: '/admin' },
   ];
 
   const scrollToSection = (sectionId) => {
@@ -20,7 +20,7 @@ const Navbar = ({ activeSection, setActiveSection }) => {
     setMobileMenuOpen(false);
     const element = document.getElementById(sectionId);
     if (element) {
-      element.scroll-intoView({ behavior: 'smooth' });
+      element.scrollIntoView({ behavior: 'smooth' });
     }
   };
 
@@ -132,4 +132,4 @@ const Navbar = ({ activeSection, setActiveSection }) => {
   );
 };
 
-export default Navbar;
+export default Navbar; 

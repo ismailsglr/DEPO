@@ -160,13 +160,13 @@ const MarketplacePage = () => {
       <h1 className="text-2xl sm:text-3xl md:text-4xl font-extrabold mb-6 sm:mb-10 text-center bg-gradient-to-r from-primary-400 to-secondary-400 bg-clip-text text-transparent drop-shadow-lg">Marketplace</h1>
       
       <div className="flex justify-center items-center gap-4 mb-8">
-        <div className="text-xl font-bold text-yellow-400 flex items-center gap-2">
+        <div className="text-xl font-bold text-primary-400 flex items-center gap-2">
           <DollarSign size={24} /> Coins: {userCoins}
         </div>
         <button
           onClick={handleClaimRewards}
           disabled={claiming}
-          className="bg-green-600 text-white px-6 py-2 rounded-lg font-semibold hover:bg-green-700 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+          className="bg-gradient-to-r from-primary-500 to-secondary-500 text-white px-6 py-2 rounded-lg font-semibold hover:from-primary-600 hover:to-secondary-600 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
         >
           {claiming ? 'Toplanıyor...' : 'Ödülleri Topla'}
         </button>
@@ -176,7 +176,8 @@ const MarketplacePage = () => {
         {animalTypes.map((type) => (
           <div key={type}>
             <h2 className="text-xl sm:text-2xl font-bold mb-4 sm:mb-6 text-center text-primary-400 flex items-center justify-center gap-2">
-              <span className="text-2xl sm:text-3xl">{animalIcons[type]}</span> {type}s
+              <span className="text-2xl sm:text-3xl">{animalIcons[type]}</span> {type}s 
+              <span className="text-xl sm:text-2xl text-secondary-400">({getTotal(type)})</span>
             </h2>
             <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 lg:gap-6 justify-center items-center">
               {products.filter((a) => a.name === type).map((animal) => {
@@ -190,14 +191,14 @@ const MarketplacePage = () => {
                       <div className="text-sm sm:text-xl font-bold text-primary-300 mb-2 flex items-center gap-2">
                         <span className="text-2xl sm:text-3xl">{animalIcons[animal.name]}</span> T{animal.tier || 1}
                       </div>
-                      <div className="text-sm sm:text-base text-gray-200 font-semibold">Fiyat: <span className="font-bold text-secondary-400">{animal.price} SOL</span></div>
+                      <div className="text-sm sm:text-base text-gray-200 font-semibold">Fiyat: <span className="font-bold text-primary-400">{animal.price} SOL</span></div>
                     </div>
                     <div className="flex flex-col items-center text-center">
-                      <div className="text-xs sm:text-sm text-secondary-300 mb-2">
-                        Sahip olduğun: <span className="font-bold">{purchases[key] || 0}</span>
+                      <div className="text-xs sm:text-sm text-gray-400 mb-2">
+                        Sahip olduğun: <span className="font-bold text-primary-300">{purchases[key] || 0}</span>
                       </div>
                       <div className="text-xs text-gray-300 text-center italic">
-                        <span className="font-bold text-primary-200">{animal.reward || 0} coin/saat</span> kazandırır
+                        <span className="font-bold text-secondary-400">{animal.reward || 0} coin/saat</span> kazandırır
                       </div>
                     </div>
                     <button
@@ -211,15 +212,12 @@ const MarketplacePage = () => {
                 );
               })}
             </div>
-            <div className="mt-4 sm:mt-6 text-center text-green-400 text-base sm:text-lg font-bold drop-shadow">
-              Sahip olduğun toplam {type.toLowerCase()} sayısı: <span className="font-extrabold">{getTotal(type)}</span>
-            </div>
           </div>
         ))}
       </div>
       {showModal && (
         <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50 p-4">
-          <div className={`rounded-2xl p-6 sm:p-8 shadow-2xl w-full max-w-[400px] text-center ${messageType === 'success' ? 'bg-green-700/95 text-white' : 'bg-red-700/95 text-white'}`}>
+          <div className={`rounded-2xl p-6 sm:p-8 shadow-2xl w-full max-w-[400px] text-center ${messageType === 'success' ? 'bg-gradient-to-r from-primary-600 to-secondary-600 text-white' : 'bg-red-700/95 text-white'}`}>
             <div className="text-xl sm:text-2xl font-bold mb-4">
               {messageType === 'success' ? 'Başarılı!' : 'Hata!'}
             </div>

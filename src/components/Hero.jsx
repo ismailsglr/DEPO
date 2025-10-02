@@ -52,22 +52,48 @@ const Hero = ({ setActiveSection }) => {
 
   return (
     <div className="w-full">
-      <section id="home" className="min-h-screen flex items-center justify-center relative overflow-hidden pt-16">
-        {/* Background Effects */}
-        <div className="absolute inset-0 bg-gradient-to-br from-dark-900 via-dark-800 to-dark-900">
-          {/* Subtle gradient overlay */}
-          <div className="absolute inset-0 bg-gradient-to-r from-primary-500/5 via-secondary-500/5 to-primary-500/5"></div>
+      <section id="home" className="min-h-screen flex items-center justify-center relative overflow-hidden pt-16 premium-hero-bg">
+        {/* Premium Background Effects */}
+        <div className="absolute inset-0">
+          {/* Premium Grid */}
+          <div className="premium-grid"></div>
           
-          {/* Floating orbs - darker and more subtle */}
-          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-gradient-to-r from-primary-500/10 to-secondary-500/10 rounded-full blur-3xl animate-float"></div>
-          <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-gradient-to-r from-secondary-500/10 to-primary-500/10 rounded-full blur-3xl animate-float delay-1000"></div>
-          <div className="absolute top-1/2 right-1/3 w-64 h-64 bg-gradient-to-r from-primary-400/8 to-secondary-400/8 rounded-full blur-2xl animate-float delay-500"></div>
+          {/* Premium Energy Orbs */}
+          <div className="premium-energy-orb"></div>
+          <div className="premium-energy-orb"></div>
+          <div className="premium-energy-orb"></div>
           
-          {/* Grid pattern - very subtle */}
-          <div className="absolute inset-0 bg-grid-pattern opacity-5"></div>
+          {/* Premium Floating Particles */}
+          <div className="premium-particle"></div>
+          <div className="premium-particle"></div>
+          <div className="premium-particle"></div>
+          <div className="premium-particle"></div>
+          <div className="premium-particle"></div>
+          <div className="premium-particle"></div>
+          <div className="premium-particle"></div>
+          <div className="premium-particle"></div>
           
-          {/* Subtle shimmer effect */}
-          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-primary-400/3 to-transparent transform -skew-x-12 animate-shimmer"></div>
+          {/* Enhanced Farm Elements with Glow */}
+          <div className="farm-tractor-glow" style={{ top: '60%', left: '-100px' }}></div>
+          <div className="farm-barn-glow" style={{ bottom: '20%', right: '10%' }}></div>
+          
+          {/* Two Windmills - Left and Right */}
+          <div className="farm-windmill-glow" style={{ top: '30%', left: '5%' }}></div>
+          <div className="farm-windmill-glow" style={{ top: '30%', right: '5%' }}></div>
+          
+          <div className="farm-tree-glow" style={{ bottom: '25%', left: '15%' }}></div>
+          <div className="farm-tree-glow" style={{ bottom: '30%', right: '20%' }}></div>
+          <div className="farm-cloud-glow" style={{ top: '15%', left: '-150px' }}></div>
+          <div className="farm-cloud-glow" style={{ top: '25%', right: '-150px' }}></div>
+          <div className="farm-sun-glow" style={{ top: '10%', right: '15%' }}></div>
+          
+          {/* Premium Floating Orbs */}
+          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-gradient-to-r from-primary-500/15 to-secondary-500/15 rounded-full blur-3xl animate-float"></div>
+          <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-gradient-to-r from-secondary-500/15 to-primary-500/15 rounded-full blur-3xl animate-float delay-1000"></div>
+          <div className="absolute top-1/2 right-1/3 w-64 h-64 bg-gradient-to-r from-primary-400/12 to-secondary-400/12 rounded-full blur-2xl animate-float delay-500"></div>
+          
+          {/* Premium Shimmer Effect */}
+          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-primary-400/5 to-transparent transform -skew-x-12 animate-shimmer"></div>
         </div>
 
         <div className="relative z-10 w-full max-w-7xl mx-auto px-2 sm:px-4 lg:px-8 text-center">
@@ -170,12 +196,23 @@ const Hero = ({ setActiveSection }) => {
       </section>
 
       {/* About Section */}
-      <section id="about" className="py-20 bg-gradient-to-b from-dark-800 via-dark-700 to-dark-800 relative overflow-hidden">
+      <section id="about" className="py-20 bg-gradient-to-b from-dark-800 via-dark-700 to-dark-800 relative overflow-hidden about-3d-bg">
         {/* Background Effects for About */}
         <div className="absolute inset-0">
           <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-primary-500/3 via-secondary-500/3 to-primary-500/3"></div>
           <div className="absolute top-1/3 left-1/4 w-72 h-72 bg-gradient-to-r from-primary-500/8 to-secondary-500/8 rounded-full blur-3xl animate-pulse-slow"></div>
           <div className="absolute bottom-1/3 right-1/4 w-72 h-72 bg-gradient-to-r from-secondary-500/8 to-primary-500/8 rounded-full blur-3xl animate-pulse-slow delay-1000"></div>
+          
+          {/* Subtle 3D Elements */}
+          <div className="about-3d-cube"></div>
+          <div className="about-3d-cube"></div>
+          <div className="about-3d-cube"></div>
+          
+          <div className="about-3d-sphere"></div>
+          <div className="about-3d-sphere"></div>
+          
+          <div className="about-3d-ring"></div>
+          <div className="about-3d-ring"></div>
         </div>
         <div className="relative z-10 max-w-7xl mx-auto px-2 sm:px-4 lg:px-8">
           {/* Section Header */}
